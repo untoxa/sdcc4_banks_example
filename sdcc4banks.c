@@ -47,7 +47,15 @@ __addressmod set_RAM_bank2 DATA_2;
 DATA_1 char hello1_ram[20];
 DATA_1 int  addendum1_ram = 2;
 DATA_2 char hello2_ram[20];
-DATA_2 int  addendum2_ram = 3;
+DATA_2 int  addendum2_ram = 4;
+DATA_2 int  addendum3_ram = 8;
+
+// !!! always use a typedef, there is a flaw in the compiler: 
+// <space0> <type> * <space1> <ident>; generates a wrong code
+typedef DATA_2 int * data2_int_ptr_t;
+
+// define array of pointers in RAM to the variables that are in RAM2 bank 
+data2_int_ptr_t addendum_ptr[2] = {&addendum2_ram, &addendum3_ram};
 
 void main() {
     // we have already initialized MBC1 in MBC1_RAM_INIT.s
@@ -86,7 +94,7 @@ void main() {
     printf("%s", switch_to(hello1_ram));
     printf("%s", switch_to(hello2_ram));
 
-    printf("1+2+3=%d", (int)(addendum0 + addendum1_ram + addendum2_ram));
+    printf("1+2+4+8=0x%x", (int)(addendum0 + addendum1_ram + (*addendum_ptr[0]) + (*addendum_ptr[1])));
 
     // stop
     while(1);
