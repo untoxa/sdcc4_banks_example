@@ -50,12 +50,10 @@ DATA_2 char hello2_ram[20];
 DATA_2 int  addendum2_ram = 4;
 DATA_2 int  addendum3_ram = 8;
 
-// !!! always use a typedef, there is a flaw in the compiler: 
-// <space0> <type> * <space1> <ident>; generates a wrong code
-typedef DATA_2 int * data2_int_ptr_t;
-
-// define array of pointers in RAM to the variables that are in RAM2 bank 
-data2_int_ptr_t addendum_ptr[2] = {&addendum2_ram, &addendum3_ram};
+// define array of pointers in RAM2 to the variables that are RAM2
+// there is a flaw in compiler that disallows pointers into banks to be in the other banks
+// details: https://sourceforge.net/p/sdcc/bugs/2995/
+DATA_2 int * DATA_2 addendum_ptr[2] = {&addendum2_ram, &addendum3_ram};
 
 void main() {
     // we have already initialized MBC1 in MBC1_RAM_INIT.s
