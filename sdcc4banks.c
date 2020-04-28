@@ -1,4 +1,5 @@
 #include <gb/gb.h>
+#include <gb/font.h>
 #include <stdio.h>
 
 // this macro is needed when using RAM banks with MBC1
@@ -57,10 +58,14 @@ DATA_2 int * DATA_2 addendum_ptr[2] = {&addendum2_ram, &addendum3_ram};
 
 void main() {
     // we have already initialized MBC1 in MBC1_RAM_INIT.s
-    
+
     // initially set the banks
     SET_BANKS(1, 1);
 
+    // some font initialization
+    font_init();     
+    font_set(font_load(font_spect));
+    
     // say hello
     for (INT8 i = 0; (hello0[i]); i++) putchar(hello0[i]);  
     for (INT8 i = 0; (hello1[i]); i++) putchar(hello1[i]);
