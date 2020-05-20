@@ -4,8 +4,7 @@ set GBDK=..\..\gbdk
 set GBDKLIB=%GBDK%\lib\small\asxxxx
 set OBJ=build
 
-set CFLAGS=-mgbz80 --no-std-crt0 -Dnonbanked= -I %GBDK%\include -I %GBDK%\include\asm -I src\include -c
-@rem set CFLAGS=%CFLAGS% -DUSE_SFR_FOR_REG
+set CFLAGS=-mgbz80 --no-std-crt0 -I %GBDK%\include -I %GBDK%\include\asm -I src\include -c
 
 set LFLAGS=-n -- -z -m -j -yt2 -yo4 -ya4 -k%GBDKLIB%\gbz80\ -lgbz80.lib -k%GBDKLIB%\gb\ -lgb.lib 
 set LFILES=%GBDKLIB%\gb\crt0.o
